@@ -121,12 +121,3 @@ class multivalued_dict(UserDict):
             raise TypeError(f'{initial_keys} is not iterable. ')
         return data
     
-t1 = multivalued_dict([['a', 1], ['a', 5], ['b', 4], ['a', 1]])
-
-t2 = t1.copy()
-tt = t1['a']
-tt[1] = 99 
-t1.__delkv__('a', 1, True, multivalued_dict.END)
-print(t1)
-print(t2)
-
