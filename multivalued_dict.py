@@ -109,20 +109,7 @@ class multivalued_dict(UserDict):
     def values(self):
         return self.data.values()
     
-    @staticmethod
-    def fromkeys(initial_keys, value = None):
-        data = defaultdict(list)
-        if isinstance(initial_keys, Iterable):
-            if isinstance(initial_keys, dict):
-                for _key in initial_keys.keys():
-                    data[_key].append(value)
-            else:
-                list_of_not_hash = list(filterfalse(lambda _key: isinstance(_key, Hashable), initial_keys))
-                if list_of_not_hash == []:  #检测所有键必须可散列
-                    for _key in initial_keys:
-                        data[_key].append(value)
-                else:
-                    raise HashError(list_of_not_hash)
-        elif initial_keys != None:
-            raise TypeError(f'{initial_keys} is not iterable. ')
-        return data
+    @classmethod
+    def fromkeys(cls, initial_keys, value = None):
+        dict_var = dict.fromkeys(initial_keys, value)
+        return multivalued_dict(dict_var)
