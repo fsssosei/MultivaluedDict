@@ -28,7 +28,7 @@ class multivalued_dict(UserDict):
 
     @classmethod
     def __is_multivalued_dict__(cls, x):
-        return (isinstance(x, multivalued_dict) or ((True if x.default_factory == type([]) else False) if isinstance(x, defaultdict) else False))
+        return (isinstance(x, cls) or ((True if x.default_factory == type([]) else False) if isinstance(x, defaultdict) else False))
 
     def __init__(self, initial_items):
         self.data = defaultdict(list)
