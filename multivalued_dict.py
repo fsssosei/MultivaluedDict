@@ -9,10 +9,16 @@ class MultivaluedDictError(Exception):
     pass
     
 class KeyValuePairsError(MultivaluedDictError):
+    def __init__(self, list_of_not_kv_pair):
+        self.list_of_not_kv_pair = list_of_not_kv_pair
+        
     def __repr__(self, list_of_not_kv_pair):
         return f'{list_of_not_kv_pair} these items do not form key-value pairs. '
 
 class HashError(MultivaluedDictError):
+    def __init__(self, list_of_not_hash):
+        self.list_of_not_hash = list_of_not_hash
+        
     def __repr__(self, list_of_not_hash):
         return f'{list_of_not_hash} these are unhashable. '
     
