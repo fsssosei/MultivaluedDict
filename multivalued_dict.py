@@ -26,40 +26,40 @@ class multivalued_dict(UserDict):
     START = 'S'
     END = 'E'
 
+    @classmethod
+    def __is_multivalued_dict__(cls, x):
+        return (isinstance(x, multivalued_dict) or ((True if x.default_factory == type([]) else False) if isinstance(x, defaultdict) else False))
     
     def __init__(self, initial_items):
         self.data = defaultdict(list)
-        if self.__is_multivalued_dict__(initial_items):
+        if multivalued_dict.__is_multivalued_dict__(initial_items):
             self.__mvdict_init__(initial_items)
         else:
             self.update(initial_items)
 
     def __mvdict_init__(self, multivalued_init_items):
-        if self.__is_multivalued_dict__(multivalued_init_items):
+        if multivalued_dict.__is_multivalued_dict__(multivalued_init_items):
             self.data = multivalued_init_items
         else:
             raise TypeError(f"{type(multivalued_init_items)}  objects are not multivalued_dict or defaultdict(<class 'list'>) objects. ")
-
-    def __is_multivalued_dict__(self, x):
-        return (isinstance(x, multivalued_dict) or ((True if x.default_factory == type([]) else False) if isinstance(x, defaultdict) else False))
     
     def __repr__(self):
         return f'multivalued_dict({dict(self.data)})'
     
     def __lenvalue__(self, key = None):
         if key == None:
-            return sum(map(lambda x: len(x), self.data.values()))
+            return sum(map(len, self.data.values()))
         else:
             return len(self.data[key])
     
     def __matchkv__(self, key, value):
         return value in self.data[key]
         
-    def __delkv__(self, key, value, all = True, direction = START):
-        assert all in (True, False), '"all" can only be True or False.'
+    def __delkv__(self, key, value, allkv = True, direction = START):
+        assert allkv in (True, False), '"allkv" can only be True or False.'
         assert direction in (self.START, self.END), '"direction" can only be START or END.'
         
-        if all:
+        if allkv:
             while value in self.data[key]:
                 self.data[key].remove(value)
         else:
@@ -99,16 +99,16 @@ class multivalued_dict(UserDict):
     
     def copy(self):
         return multivalued_dict(self.data)
-        
+    
     def items(self):
         return self.data.items()
     
     def keys(self):
         return self.data.keys()
-
+    
     def values(self):
         return self.data.values()
-
+    
     @staticmethod
     def fromkeys(initial_keys, value = None):
         data = defaultdict(list)
