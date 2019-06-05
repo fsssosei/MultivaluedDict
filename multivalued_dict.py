@@ -1,7 +1,7 @@
 from collections import defaultdict
 from collections import UserDict
 from collections.abc import Iterable
-from is_hash import is_hash
+from collections.abc import Hashable
 from itertools import filterfalse
 
 
@@ -77,7 +77,7 @@ class multivalued_dict(UserDict):
             else:
                 list_of_not_kv_pair = list(filterfalse(lambda item: len(item) == 2, update_items))  #找出不是两个元素的项，也就是无法构成键值对的项
                 if list_of_not_kv_pair == []:
-                    list_of_not_hash = list(filterfalse(is_hash, (item[0] for item in update_items)))
+                    list_of_not_hash = list(filterfalse(lambda _key: isinstance(_key, Hashable), (item[0] for item in update_items)))
                     if list_of_not_hash == []:  #检测所有键必须可散列
                         for _key, _value in update_items:
                             self.data[_key].append(_value)
@@ -111,7 +111,7 @@ class multivalued_dict(UserDict):
                 for _key in initial_keys.keys():
                     data[_key].append(value)
             else:
-                list_of_not_hash = list(filterfalse(is_hash, initial_keys))
+                list_of_not_hash = list(filterfalse(lambda _key: isinstance(_key, Hashable), initial_keys))
                 if list_of_not_hash == []:  #检测所有键必须可散列
                     for _key in initial_keys:
                         data[_key].append(value)
@@ -120,4 +120,3 @@ class multivalued_dict(UserDict):
         elif initial_keys != None:
             raise TypeError(f'{initial_keys} is not iterable. ')
         return data
-    
