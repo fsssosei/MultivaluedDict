@@ -47,7 +47,7 @@ class multivalued_dict(UserDict):
         return f'multivalued_dict({dict(self.data)})'
 
     def __lenvalue__(self, key = None):
-        if key == None:
+        if key is None:
             return sum(map(len, self.data.values()))
         else:
             return len(self.data[key])
