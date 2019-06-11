@@ -13,7 +13,7 @@ class KeyValuePairsError(MultivaluedDictError):
         self.list_of_not_kv_pair = list_of_not_kv_pair
 
     def __repr__(self):
-        return f'{list_of_not_kv_pair} these items do not form key-value pairs. '
+        return f'{list_of_not_kv_pair} does not form a key-value pair. '
 
 class multivalued_dict(UserDict):
     START = 'S'
@@ -91,10 +91,10 @@ class multivalued_dict(UserDict):
                 for _key, _value in update_items.items():
                     self.data[_key].append(_value)
             else:
-                list_of_not_kv_pair = list(filterfalse(lambda item: len(item) == 2, update_items))  #找出不是两个元素的项，也就是无法构成键值对的项
-                if list_of_not_kv_pair != []:
-                    raise KeyValuePairsError(list_of_not_kv_pair)
-                for _key, _value in update_items:
+                for item in update_items:
+                    if len(item) != 2:  #找出不是两个元素的项，也就是无法构成键值对的项
+                        raise KeyValuePairsError(item)
+                    _key, _value = item
                     self.data[_key].append(_value)
         if kwargs != dict():
             self.update(kwargs)
