@@ -15,13 +15,6 @@ class KeyValuePairsError(MultivaluedDictError):
     def __repr__(self):
         return f'{list_of_not_kv_pair} these items do not form key-value pairs. '
 
-class HashError(MultivaluedDictError):
-    def __init__(self, list_of_not_hash):
-        self.list_of_not_hash = list_of_not_hash
-
-    def __repr__(self):
-        return f'{list_of_not_hash} these are unhashable. '
-
 class multivalued_dict(UserDict):
     START = 'S'
     END = 'E'
@@ -101,9 +94,6 @@ class multivalued_dict(UserDict):
                 list_of_not_kv_pair = list(filterfalse(lambda item: len(item) == 2, update_items))  #找出不是两个元素的项，也就是无法构成键值对的项
                 if list_of_not_kv_pair != []:
                     raise KeyValuePairsError(list_of_not_kv_pair)
-                list_of_not_hash = list(filterfalse(lambda _key: isinstance(_key, Hashable), (item[0] for item in update_items)))  #检测所有键必须可散列
-                if list_of_not_hash != []:
-                    raise HashError(list_of_not_hash)
                 for _key, _value in update_items:
                     self.data[_key].append(_value)
         if kwargs != dict():
