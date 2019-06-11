@@ -110,6 +110,6 @@ class multivalued_dict(UserDict):
         return self.data.values()
 
     @classmethod
-    def fromkeys(cls, initial_keys, value = None):
-        dict_var = dict.fromkeys(initial_keys, value)
-        return multivalued_dict(dict_var)
+    def fromkeys(cls, iterable, value = None):
+        dict_var = dict.fromkeys(iterable, value)
+        return cls(dict_var)
