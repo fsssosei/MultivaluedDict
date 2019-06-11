@@ -30,20 +30,19 @@ class multivalued_dict(UserDict):
     def __is_multivalued_dict__(cls, x):
         return (isinstance(x, cls) or ((True if x.default_factory == type([]) else False) if isinstance(x, defaultdict) else False))
 
-    def __init__(*args, **kwargs):
-        if args == ():
-            raise TypeError("The '__init__' method needs to be instantiated. ")
-        self, *args = args
+    def __init__(self, *args, **kwargs):
+        if not multivalued_dict.__is_multivalued_dict__(self):
+            raise TypeError(f"descriptor '__init__' requires a 'multivalued_dict' object but received a {type(self)}")
         len_of_args = len(args)
+        if len_of_args > 1:
+            raise TypeError(f'expected at most 1 arguments, got {len_of_args}')
+        self.data = defaultdict(list)
         if len_of_args == 1:
             initial_items = args[0]
-            self.data = defaultdict(list)
             if multivalued_dict.__is_multivalued_dict__(initial_items):
                 self.__mvdict_init__(initial_items)
             else:
                 self.update(initial_items)
-        elif len_of_args > 1:
-            raise TypeError(f'expected at most 1 arguments, got {len_of_args}')
         if kwargs != dict():
             self.update(kwargs)
 
@@ -85,11 +84,12 @@ class multivalued_dict(UserDict):
     def count(self, key, value):
         return self.data[key].count(value)
 
-    def update(*args, **kwargs):
-        if args == ():
-            raise TypeError("The 'update' method needs to be instantiated. ")
-        self, *args = args
+    def update(self, *args, **kwargs):
+        if not multivalued_dict.__is_multivalued_dict__(self):
+            raise TypeError(f"descriptor 'update' requires a 'multivalued_dict' object but received a {type(self)}")
         len_of_args = len(args)
+        if len_of_args > 1:
+            raise TypeError(f'expected at most 1 arguments, got {len_of_args}')
         if len_of_args == 1:
             update_items = args[0]
             if isinstance(update_items, Iterable):
@@ -108,9 +108,7 @@ class multivalued_dict(UserDict):
                     else:
                         raise KeyValuePairsError(list_of_not_kv_pair)
             else:
-                raise TypeError(f'{type(update_items)} object is not iterable. ')
-        elif len_of_args > 1:
-            raise TypeError(f'expected at most 1 arguments, got {len_of_args}')
+                raise TypeError(f'{type(update_items)} object is not iterable ')
         if kwargs != dict():
             self.update(kwargs)
 
