@@ -92,23 +92,20 @@ class multivalued_dict(UserDict):
             raise TypeError(f'expected at most 1 arguments, got {len_of_args}')
         if len_of_args == 1:
             update_items = args[0]
-            if isinstance(update_items, Iterable):
-                if isinstance(update_items, dict):
-                    for _key, _value in update_items.items():
-                        self.data[_key].append(_value)
-                else:
-                    list_of_not_kv_pair = list(filterfalse(lambda item: len(item) == 2, update_items))  #找出不是两个元素的项，也就是无法构成键值对的项
-                    if list_of_not_kv_pair == []:
-                        list_of_not_hash = list(filterfalse(lambda _key: isinstance(_key, Hashable), (item[0] for item in update_items)))
-                        if list_of_not_hash == []:  #检测所有键必须可散列
-                            for _key, _value in update_items:
-                                self.data[_key].append(_value)
-                        else:
-                            raise HashError(list_of_not_hash)
-                    else:
-                        raise KeyValuePairsError(list_of_not_kv_pair)
-            else:
+            if not isinstance(update_items, Iterable):
                 raise TypeError(f'{type(update_items)} object is not iterable ')
+            if isinstance(update_items, dict):
+                for _key, _value in update_items.items():
+                    self.data[_key].append(_value)
+            else:
+                list_of_not_kv_pair = list(filterfalse(lambda item: len(item) == 2, update_items))  #找出不是两个元素的项，也就是无法构成键值对的项
+                if list_of_not_kv_pair != []:
+                    raise KeyValuePairsError(list_of_not_kv_pair)
+                list_of_not_hash = list(filterfalse(lambda _key: isinstance(_key, Hashable), (item[0] for item in update_items)))  #检测所有键必须可散列
+                if list_of_not_hash != []:
+                    raise HashError(list_of_not_hash)
+                for _key, _value in update_items:
+                    self.data[_key].append(_value)
         if kwargs != dict():
             self.update(kwargs)
 
