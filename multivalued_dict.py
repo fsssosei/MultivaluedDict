@@ -1,8 +1,6 @@
 from collections import defaultdict
 from collections import UserDict
 from collections.abc import Iterable
-from collections.abc import Hashable
-from itertools import filterfalse
 
 START_POS = 'S'
 END_POS = 'E'
