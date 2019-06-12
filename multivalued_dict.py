@@ -73,36 +73,14 @@ class multivalued_dict(UserDict):
         len_of_args = len(args)
         if len_of_args > 1:
             raise TypeError(f'expected at most 1 arguments, got {len_of_args}')
-        if 'data' not in self.__dict__:
-            self.data = defaultdict(list)
-        if len_of_args == 1:
-            initial_items = args[0]
-            if multivalued_dict.__is_multivalued_dict__(initial_items):
-                self.__mvdict_init__(initial_items)
-            else:
+        else:
+            if 'data' not in self.__dict__:
+                self.data = defaultdict(list)
+            if len_of_args == 1:
+                initial_items = args[0]
                 self.update(initial_items)
         if kwargs != dict():
             self.update(kwargs)
-
-    def __mvdict_init__(self, multivalued_init_items):
-        '''
-            >>> mv_d = multivalued_dict()
-            >>> mv_d.__mvdict_init__(multivalued_dict({'a': 'test-1', 'b': 'test-2', 'c': 'test-3'}))
-            >>> mv_d
-            multivalued_dict({'a': ['test-1'], 'b': ['test-2'], 'c': ['test-3']})
-            
-            >>> multivalued_dict.__mvdict_init__(mv_d, multivalued_dict({'d': 'test-4'}))
-            >>> mv_d
-            multivalued_dict({'a': ['test-1'], 'b': ['test-2'], 'c': ['test-3'], 'd': ['test-4']})
-        '''
-        if multivalued_dict.__is_multivalued_dict__(multivalued_init_items):
-            if 'data' not in self.__dict__:
-                self.data = multivalued_init_items
-            else:
-                for _key, _value in multivalued_init_items.items():
-                    self.data[_key].extend(_value)
-        else:
-            raise TypeError(f"{type(multivalued_init_items)}  objects are not multivalued_dict or defaultdict(<class 'list'>) objects. ")
     
     def __repr__(self):
         return f'multivalued_dict({dict(self.data)})'
@@ -176,7 +154,29 @@ class multivalued_dict(UserDict):
     
     def update(self, *args, **kwargs):
         '''
+            >>> mv_d = multivalued_dict()
+            >>> mv_d
+            multivalued_dict({})
             
+            >>> mv_d.update({'a': 'test-1', 'b': 'test-2', 'c': 'test-3'})
+            >>> mv_d
+            multivalued_dict({'a': ['test-1'], 'b': ['test-2'], 'c': ['test-3']})
+            
+            >>> mv_d.update([['a', 'test-4'], ['a', 'test-5']])
+            >>> mv_d
+            multivalued_dict({'a': ['test-1', 'test-4', 'test-5'], 'b': ['test-2'], 'c': ['test-3']})
+            
+            >>> mv_d.update(c = 'test-3')
+            >>> mv_d
+            multivalued_dict({'a': ['test-1', 'test-4', 'test-5'], 'b': ['test-2'], 'c': ['test-3', 'test-3']})
+            
+            >>> mv_d.update([['b', 'test-6'], ['c', 'test-7']], a = 'test-8')
+            >>> mv_d
+            multivalued_dict({'a': ['test-1', 'test-4', 'test-5', 'test-8'], 'b': ['test-2', 'test-6'], 'c': ['test-3', 'test-3', 'test-7']})
+            
+            >>> mv_d.update(multivalued_dict({'d': 'test-9', 'e': 'test-10'}))
+            >>> mv_d
+            multivalued_dict({'a': ['test-1', 'test-4', 'test-5', 'test-8'], 'b': ['test-2', 'test-6'], 'c': ['test-3', 'test-3', 'test-7'], 'd': ['test-9'], 'e': ['test-10']})
         '''
         if not multivalued_dict.__is_multivalued_dict__(self):
             raise TypeError(f"descriptor 'update' requires a 'multivalued_dict' object but received a {type(self)}")
@@ -187,7 +187,10 @@ class multivalued_dict(UserDict):
             update_items = args[0]
             if not isinstance(update_items, Iterable):
                 raise TypeError(f'{type(update_items)} object is not iterable ')
-            if isinstance(update_items, dict):
+            if multivalued_dict.__is_multivalued_dict__(update_items):
+                for _key, _value in update_items.items():
+                    self.data[_key].extend(_value)
+            elif isinstance(update_items, dict):
                 for _key, _value in update_items.items():
                     self.data[_key].append(_value)
             else:
