@@ -6,16 +6,6 @@ import inspect
 START_POS = 'S'
 END_POS = 'E'
 
-class MultivaluedDictError(Exception):
-    pass
-    
-class KeyValuePairsError(MultivaluedDictError):
-    def __init__(self, list_of_not_kv_pair):
-        self.list_of_not_kv_pair = list_of_not_kv_pair
-        
-    def __repr__(self):
-        return f'{list_of_not_kv_pair} does not form a key-value pair. '
-    
 class multivalued_dict(UserDict):
     '''
         >>> mv_d = multivalued_dict()
@@ -322,7 +312,17 @@ class multivalued_dict(UserDict):
     
     def setdefault(self, key, default = None):
         '''
-            
+            >>> mv_d = multivalued_dict({'a': 'test-1', 'c': 'test-3'})
+            >>> mv_d.setdefault('a')
+            ['test-1']
+            >>> mv_d.setdefault('b')
+            [None]
+            >>> mv_d
+            multivalued_dict({'a': ['test-1'], 'c': ['test-3'], 'b': [None]})
+            >>> mv_d.setdefault('d', 'test=4')
+            ['test=4']
+            >>> mv_d
+            multivalued_dict({'a': ['test-1'], 'c': ['test-3'], 'b': [None], 'd': ['test=4']})
         '''
         multivalued_dict.__is_self(self)
         return self.data.setdefault(key, [default])
@@ -339,49 +339,91 @@ class multivalued_dict(UserDict):
     
     def popitem(self):
         '''
-            
+            >>> mv_d = multivalued_dict({'a': 'test-1', 'b': 'test-2', 'c': 'test-3'})
+            >>> mv_d
+            multivalued_dict({'a': ['test-1'], 'b': ['test-2'], 'c': ['test-3']})
+            >>> mv_d.popitem()
+            ('c', ['test-3'])
         '''
         multivalued_dict.__is_self(self)
         return self.data.popitem()
     
     def copy(self):
         '''
-            
+            >>> mv_d_a = multivalued_dict([['a', 1], ['a', 2], ['a', 3]])
+            >>> mv_d_b = mv_d_a.copy()
+            >>> mv_d_a
+            multivalued_dict({'a': [1, 2, 3]})
+            >>> mv_d_b
+            multivalued_dict({'a': [1, 2, 3]})
+            >>> mv_d_a['a'][1] = 99
+            >>> mv_d_a
+            multivalued_dict({'a': [1, 99, 3]})
+            >>> mv_d_b
+            multivalued_dict({'a': [1, 2, 3]})
         '''
         multivalued_dict.__is_self(self)
         return multivalued_dict(self.data)
     
-    def clear(self):
-        '''
-            
-        '''
-        multivalued_dict.__is_self(self)
-        return self.data.clear()
-    
     def items(self):
         '''
-            
+            >>> mv_d = multivalued_dict({'a': 'test-1', 'b': 'test-2', 'c': 'test-3'})
+            >>> for k, v in mv_d.items():
+            ...     print(f'key = {k}, value = {v}')
+            ...
+            key = a, value = ['test-1']
+            key = b, value = ['test-2']
+            key = c, value = ['test-3']
         '''
         multivalued_dict.__is_self(self)
         return self.data.items()
     
     def keys(self):
         '''
-            
+            >>> mv_d = multivalued_dict({'a': 'test-1', 'b': 'test-2', 'c': 'test-3'})
+            >>> for k in mv_d.keys():
+            ...     print(f'key = {k}')
+            ...
+            key = a
+            key = b
+            key = c
         '''
         multivalued_dict.__is_self(self)
         return self.data.keys()
     
     def values(self):
         '''
-            
+            >>> mv_d = multivalued_dict({'a': 'test-1', 'b': 'test-2', 'c': 'test-3'})
+            >>> for v in mv_d.values():
+            ...     print(f'value = {v}')
+            ...
+            value = ['test-1']
+            value = ['test-2']
+            value = ['test-3']
         '''
         multivalued_dict.__is_self(self)
         return self.data.values()
     
+    def clear(self):
+        '''
+            >>> mv_d = multivalued_dict({'a': 'test-1', 'b': 'test-2', 'c': 'test-3'})
+            >>> mv_d
+            multivalued_dict({'a': ['test-1'], 'b': ['test-2'], 'c': ['test-3']})
+            >>> mv_d.clear()
+            >>> mv_d
+            multivalued_dict({})
+        '''
+        multivalued_dict.__is_self(self)
+        self.data.clear()
+    
     def reverse(self, key):
         '''
-            
+            >>> mv_d = multivalued_dict([['a', 1], ['a', 2], ['a', 3]])
+            >>> mv_d
+            multivalued_dict({'a': [1, 2, 3]})
+            >>> mv_d.reverse('a')
+            >>> mv_d
+            multivalued_dict({'a': [3, 2, 1]})
         '''
         multivalued_dict.__is_self(self)
         self.data[key].reverse()
