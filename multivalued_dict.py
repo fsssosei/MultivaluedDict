@@ -107,8 +107,16 @@ class multivalued_dict(UserDict):
         return f'multivalued_dict({dict(self.data)})'
     
     def __iter__(self):
+        '''
+            >>> multivalued_dict(multivalued_dict({'a': 'test-1'}))
+            multivalued_dict({'a': ['test-1']})
+            
+            >>> mv_d = multivalued_dict({'a': 'test-1', 'b': 'test-2', 'c': 'test-3'})
+            >>> multivalued_dict(mv_d.__iter__())
+            multivalued_dict({'a': [['test-1']], 'b': [['test-2']], 'c': [['test-3']]})
+        '''
         multivalued_dict.__is_self(self)
-        return self.data.__iter__()
+        return iter(self.data.items())
     
     def __len__(self):
         '''
