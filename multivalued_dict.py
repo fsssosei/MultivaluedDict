@@ -5,7 +5,7 @@ import inspect
 
 START_POS = 'S'
 END_POS = 'E'
-
+    
 class multivalued_dict(UserDict):
     '''
         >>> mv_d = multivalued_dict()
@@ -34,6 +34,10 @@ class multivalued_dict(UserDict):
         >>> mv_d = multivalued_dict(mv_d0)
         >>> mv_d
         multivalued_dict({'a': ['test-1'], 'b': ['test-2'], 'c': ['test-3']})
+        
+        >>> multivalued_dict([['a', 'test-1']], [['b', 'test-2']])
+        Traceback (most recent call last):
+        TypeError: multivalued_dict expected at most 1 arguments, got 2
     '''
     
     __marker = object()
@@ -76,6 +80,14 @@ class multivalued_dict(UserDict):
             >>> multivalued_dict.__init__(mv_d, {'e': 'test-5'})
             >>> mv_d
             multivalued_dict({'a': ['test-1'], 'b': ['test-2'], 'c': ['test-3'], 'd': ['test-4'], 'e': ['test-5']})
+            
+            >>> mv_d.__init__({'a': 'test-6'})
+            >>> mv_d
+            multivalued_dict({'a': ['test-1', 'test-6'], 'b': ['test-2'], 'c': ['test-3'], 'd': ['test-4'], 'e': ['test-5']})
+            
+            >>> multivalued_dict.__init__('x')
+            Traceback (most recent call last):
+            TypeError: descriptor '__init__' requires a 'multivalued_dict' object but received a 'str'
         '''
         multivalued_dict.__is_self(self)
         len_of_args = len(args)
@@ -110,7 +122,7 @@ class multivalued_dict(UserDict):
         multivalued_dict.__is_self(self)
         return self.data.__len__()
     
-    def __lenvalue__(self, key = None):
+    def __lenvalue__(self, key = __marker):
         '''
             >>> mv_d = multivalued_dict([['a', 1], ['a', 2], ['a', 3], ['b', 1], ['b', 2], ['c', 1]])
             >>> mv_d.__lenvalue__()
@@ -119,7 +131,7 @@ class multivalued_dict(UserDict):
             3
         '''
         multivalued_dict.__is_self(self)
-        if key == None:
+        if key is self.__marker:
             return sum(map(len, self.data.values()))
         else:
             return len(self.data[key])
@@ -129,6 +141,10 @@ class multivalued_dict(UserDict):
             >>> mv_d = multivalued_dict({'a': 'test-1', 'b': 'test-2', 'c': 'test-3'})
             >>> mv_d['a']
             ['test-1']
+            
+            >>> mv_d['d']
+            Traceback (most recent call last):
+            KeyError: 'd'
         '''
         multivalued_dict.__is_self(self)
         if key in self.data:
@@ -282,6 +298,26 @@ class multivalued_dict(UserDict):
             >>> mv_d.update(multivalued_dict({'d': 'test-9', 'e': 'test-10'}))
             >>> mv_d
             multivalued_dict({'a': ['test-1', 'test-4', 'test-5', 'test-8'], 'b': ['test-2', 'test-6'], 'c': ['test-3', 'test-3', 'test-7'], 'd': ['test-9'], 'e': ['test-10']})
+
+            >>> mv_d.update([['a', 'test-1']], [['b', 'test-2']])
+            Traceback (most recent call last):
+            TypeError: multivalued_dict expected at most 1 arguments, got 2
+
+            >>> mv_d.update(1)
+            Traceback (most recent call last):
+            TypeError: 'int' object is not iterable
+            
+            >>> mv_d.update([1])
+            Traceback (most recent call last):
+            TypeError: cannot convert dictionary update sequence element #0 to a sequence
+            
+            >>> mv_d.update([['1', '2', '3']])
+            Traceback (most recent call last):
+            ValueError: dictionary update sequence element #0 has length 3; 2 is required
+            
+            >>> multivalued_dict.update('x')
+            Traceback (most recent call last):
+            TypeError: descriptor 'update' requires a 'multivalued_dict' object but received a 'str'
         '''
         multivalued_dict.__is_self(self)
         len_of_args = len(args)
