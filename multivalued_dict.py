@@ -50,9 +50,9 @@ class multivalued_dict(UserDict):
     @classmethod
     def __is_multivalued_dict__(cls, x):
         '''
-        >>> mv_d = multivalued_dict()
-        >>> multivalued_dict.__is_multivalued_dict__(mv_d)
-        True
+            >>> mv_d = multivalued_dict()
+            >>> multivalued_dict.__is_multivalued_dict__(mv_d)
+            True
         '''
         return (isinstance(x, cls) or ((True if x.default_factory == type([]) else False) if isinstance(x, defaultdict) else False))
     
@@ -107,9 +107,6 @@ class multivalued_dict(UserDict):
         return f'multivalued_dict({dict(self.data)})'
     
     def __iter__(self):
-        '''
-            
-        '''
         multivalued_dict.__is_self(self)
         return self.data.__iter__()
     
