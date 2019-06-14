@@ -94,7 +94,7 @@ class multivalued_dict(UserDict):
         if len_of_args > 1:
             raise TypeError(f'multivalued_dict expected at most 1 arguments, got {len_of_args}')
         else:
-            if 'data' not in self.__dict__:
+            if not hasattr(self, 'data'):
                 self.data = defaultdict(list)
             if len_of_args == 1:
                 initial_items = args[0]
