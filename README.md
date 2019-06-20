@@ -3,6 +3,8 @@
 
 本库特点是跟dict原生类型用例高度一致，包括发生异常的类型。在此基础上增添了一些专门的多值字典方法。
 
+欢迎补全文档。
+
 Multivalued dictionary library in python. 
 
 Welcome to complete the documentation. 
