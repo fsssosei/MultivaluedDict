@@ -380,7 +380,20 @@ class multivalued_dict(UserDict):
         
     def pop(self, key, default=__marker):
         '''
+            >>> mv_d = multivalued_dict({'a': 'test-1', 'b': 'test-2', 'c': 'test-3'})
+            >>> mv_d.pop('b')
+            ['test-2']
+            >>> mv_d
+            multivalued_dict({'a': ['test-1'], 'c': ['test-3']})
             
+            >>> mv_d.pop('d')
+            Traceback (most recent call last):
+            KeyError: 'd'
+            
+            >>> mv_d.pop('d', 'test-0')
+            ['test-0']
+            >>> mv_d
+            multivalued_dict({'a': ['test-1'], 'c': ['test-3']})
         '''
         multivalued_dict.__is_self(self)
         if default is self.__marker:
@@ -390,6 +403,8 @@ class multivalued_dict(UserDict):
     
     def popitem(self):
         '''
+            D.popitem() -> (k, v), remove and return some (key, value) pair as a 2-tuple; but raise KeyError if D is empty.
+            
             >>> mv_d = multivalued_dict({'a': 'test-1', 'b': 'test-2', 'c': 'test-3'})
             >>> mv_d
             multivalued_dict({'a': ['test-1'], 'b': ['test-2'], 'c': ['test-3']})
@@ -401,6 +416,8 @@ class multivalued_dict(UserDict):
     
     def copy(self):
         '''
+            D.copy() -> a shallow copy of D
+            
             >>> mv_d_a = multivalued_dict([['a', 1], ['a', 2], ['a', 3]])
             >>> mv_d_b = mv_d_a.copy()
             >>> mv_d_a
@@ -418,6 +435,8 @@ class multivalued_dict(UserDict):
     
     def items(self):
         '''
+            D.items() -> a set-like object providing a view on D's items
+            
             >>> mv_d = multivalued_dict({'a': 'test-1', 'b': 'test-2', 'c': 'test-3'})
             >>> for k, v in mv_d.items():
             ...     print(f'key = {k}, value = {v}')
@@ -431,6 +450,8 @@ class multivalued_dict(UserDict):
     
     def keys(self):
         '''
+            D.keys() -> a set-like object providing a view on D's keys
+            
             >>> mv_d = multivalued_dict({'a': 'test-1', 'b': 'test-2', 'c': 'test-3'})
             >>> for k in mv_d.keys():
             ...     print(f'key = {k}')
@@ -444,6 +465,8 @@ class multivalued_dict(UserDict):
     
     def values(self):
         '''
+            D.values() -> an object providing a view on D's values
+            
             >>> mv_d = multivalued_dict({'a': 'test-1', 'b': 'test-2', 'c': 'test-3'})
             >>> for v in mv_d.values():
             ...     print(f'value = {v}')
@@ -457,6 +480,8 @@ class multivalued_dict(UserDict):
     
     def clear(self):
         '''
+            D.clear() -> None.  Remove all items from D.
+            
             >>> mv_d = multivalued_dict({'a': 'test-1', 'b': 'test-2', 'c': 'test-3'})
             >>> mv_d
             multivalued_dict({'a': ['test-1'], 'b': ['test-2'], 'c': ['test-3']})
