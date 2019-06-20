@@ -8,6 +8,16 @@ END_POS = 'E'
     
 class multivalued_dict(UserDict):
     '''
+        multivalued_dict() -> new empty dictionary
+        multivalued_dict(mapping) -> new dictionary initialized from a mapping object's
+            (key, value) pairs
+        multivalued_dict(iterable) -> new dictionary initialized as if via:
+            d = {}
+            for k, v in iterable:
+                d[k].append(v)
+        multivalued_dict(**kwargs) -> new dictionary initialized with the name=value pairs
+            in the keyword argument list.  For example:  dict(one=1, two=2)
+        
         >>> mv_d = multivalued_dict()
         >>> mv_d
         multivalued_dict({})
