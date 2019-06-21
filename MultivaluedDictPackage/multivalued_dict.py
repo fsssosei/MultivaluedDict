@@ -491,7 +491,7 @@ class multivalued_dict(UserDict):
         '''
         multivalued_dict.__is_self(self)
         self.data.clear()
-        
+
     def reverse(self, key):
         '''
             >>> mv_d = multivalued_dict([['a', 1], ['a', 2], ['a', 3]])
