@@ -1,4 +1,4 @@
-# This is a multi-valued dictionary package. 
+# This is a multi-valued dictionary package.
 '''
 MultivaluedDict
 Copyright (C) 2019 sosei
