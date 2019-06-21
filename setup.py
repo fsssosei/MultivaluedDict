@@ -20,7 +20,7 @@ from setuptools import setup, find_packages
 
 with open("README.md", encoding='utf-8') as fh:
     long_description = fh.read()
-    
+
 setup(
     name='multivalued_dict',
     version='1.0.0',
