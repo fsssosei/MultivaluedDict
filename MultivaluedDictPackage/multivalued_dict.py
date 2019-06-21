@@ -17,7 +17,7 @@ class multivalued_dict(UserDict):
                 d[k].append(v)
         multivalued_dict(**kwargs) -> new dictionary initialized with the name=value pairs
             in the keyword argument list.  For example:  dict(one=1, two=2)
-    
+        
         >>> mv_d = multivalued_dict()
         >>> mv_d
         multivalued_dict({})
@@ -76,7 +76,7 @@ class multivalued_dict(UserDict):
         '''
         dict_var = dict.fromkeys(iterable, value)
         return cls(dict_var)
-
+    
     def __init__(self, *args, **kwargs):
         '''
             >>> mv_d = multivalued_dict({'a': 'test-1', 'b': 'test-2', 'c': 'test-3'})
@@ -250,7 +250,7 @@ class multivalued_dict(UserDict):
         '''
         multivalued_dict.__is_self(self)
         self.data.__delitem__(key)
-        
+    
     def __setitem__(self, key, item):
         '''
             >>> mv_d = multivalued_dict([['a', 'test-1'], ['a', 'test-2'], ['a', 'test-3'], ['b', 'test-4']])
@@ -377,7 +377,7 @@ class multivalued_dict(UserDict):
         '''
         multivalued_dict.__is_self(self)
         return self.data.setdefault(key, [default])
-        
+    
     def pop(self, key, default=__marker):
         '''
             >>> mv_d = multivalued_dict({'a': 'test-1', 'b': 'test-2', 'c': 'test-3'})
@@ -491,7 +491,7 @@ class multivalued_dict(UserDict):
         '''
         multivalued_dict.__is_self(self)
         self.data.clear()
-    
+        
     def reverse(self, key):
         '''
             >>> mv_d = multivalued_dict([['a', 1], ['a', 2], ['a', 3]])
