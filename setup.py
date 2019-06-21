@@ -18,7 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from setuptools import setup, find_packages
 
-with open("README.md", "r") as fh:
+with open("README.md", encoding='utf-8') as fh:
     long_description = fh.read()
     
 setup(
@@ -27,12 +27,11 @@ setup(
     description='Multivalued dictionary package in python.',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    keywords='multivalued dictionary',
     url='https://github.com/fsssosei/MultivaluedDict',
     license='GNU Affero General Public License v3',
-    license_file='LICENSE',
     author='sosei',
     author_email='fss.sosei@gmail.com',
+    keywords=['multivalued', 'dictionary'],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'License :: OSI Approved :: GNU Affero General Public License v3',
