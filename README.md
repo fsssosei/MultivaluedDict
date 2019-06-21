@@ -8,3 +8,6 @@
 Multivalued dictionary package in python. 
 
 Welcome to complete the documentation. 
+
+Installation method:
+pip install multivalued_dict
