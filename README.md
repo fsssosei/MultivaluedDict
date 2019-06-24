@@ -9,14 +9,37 @@ Multivalued dictionary package in python.
 
 Welcome to complete the documentation. 
 
-Installation method:
+Installation
+
+Installation can be done through pip. You must have python version >= 3.6.
 
 pip install multivalued_dict
 
-The import method:
+Usage
 
 import multivalued_dict_package
 
 or
 
 from multivalued_dict_package import *
+
+
+>>> mv_d = multivalued_dict()
+
+>>> mv_d
+
+multivalued_dict({})
+
+
+>>> mv_d = multivalued_dict({'a': 'test-1', 'b': 'test-2', 'c': 'test-3'})
+
+>>> mv_d
+
+multivalued_dict({'a': ['test-1'], 'b': ['test-2'], 'c': ['test-3']})
+
+
+>>> mv_d = multivalued_dict([['a', 'test-1'], ['b', 'test-2'], ['a', 'test-3']])
+
+>>> mv_d
+
+multivalued_dict({'a': ['test-1', 'test-3'], 'b': ['test-2']})
