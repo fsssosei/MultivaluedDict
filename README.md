@@ -9,13 +9,13 @@
 
 *Welcome to complete the documentation.*
 
-# Installation
+## Installation
 
 Installation can be done through pip. You must have python version >= 3.6.
 
 pip install multivalued_dict
 
-# Usage
+## Usage
 
 <pre><code>import multivalued_dict_package</code></pre>
 
