@@ -18,6 +18,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import inspect
 
+__all__ = ['check_self_class_call']
+
 class check_self_class_call(object):
     '''Check the class name pattern of the class instance method called the self.'''
     def __init__(self, original_class):
