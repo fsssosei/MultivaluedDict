@@ -23,6 +23,7 @@ __all__ = ['check_self_class_call']
 class check_self_class_call(object):
     '''Check the class name pattern of the class instance method called the self.'''
     def __init__(self, original_class):
+        super().__init__()
         self.__original_class = original_class
     def __call__(self, *args, **kwargs):
         return self.__original_class(*args, **kwargs)
