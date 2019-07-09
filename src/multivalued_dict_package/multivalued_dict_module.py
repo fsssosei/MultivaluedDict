@@ -119,6 +119,7 @@ class multivalued_dict(UserDict):
             Traceback (most recent call last):
             TypeError: descriptor '__init__' requires a 'multivalued_dict' object but received a 'str'
         '''
+        super().__init__()
         len_of_args = len(args)
         if len_of_args > 1:
             raise TypeError(f'multivalued_dict expected at most 1 arguments, got {len_of_args}')
