@@ -16,7 +16,8 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 '''
 
-from check_self_class_call_package import *
+from check_self_class_call_of_meta_package import check_self_class_call_of_meta
+from abc import ABCMeta
 from collections import defaultdict
 from collections import UserDict
 from collections.abc import Iterable
@@ -26,8 +27,10 @@ __all__ = ['multivalued_dict', 'START_POS', 'END_POS']
 START_POS = 'S'
 END_POS = 'E'
 
-@check_self_class_call
-class multivalued_dict(UserDict):
+class __eliminate_metaclass_conflicts(check_self_class_call_of_meta, ABCMeta):
+    pass
+
+class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):
     '''
         multivalued_dict() -> new empty dictionary
         multivalued_dict(mapping) -> new dictionary initialized from a mapping object's
@@ -124,7 +127,7 @@ class multivalued_dict(UserDict):
         if len_of_args > 1:
             raise TypeError(f'multivalued_dict expected at most 1 arguments, got {len_of_args}')
         else:
-            if not hasattr(self, 'data'):
+            if not isinstance(self.data, defaultdict):
                 self.data = defaultdict(list)
             if len_of_args == 1:
                 initial_items = args[0]
