@@ -16,7 +16,7 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 '''
 
-import inspect
+from inspect import isfunction
 from functools import wraps
 
 __all__ = ['check_self_class_call_of_meta']
@@ -41,7 +41,7 @@ class check_self_class_call_of_meta(type):
     
     def __new__(cls, name, bases, namespace, **kwargs):
         for key, value in namespace.items():
-            if inspect.isfunction(value):
+            if isfunction(value):
                 namespace.__setitem__(key, cls.__class_function_wrapper(value))
         return type.__new__(cls, name, bases, namespace)
     
