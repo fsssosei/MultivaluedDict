@@ -18,7 +18,7 @@ pip install multivalued_dict
 
 ## Usage
 
-<pre><code>import multivalued_dict_package</code></pre>
+<pre><code>from multivalued_dict_package import multivalued_dict</code></pre>
 
 or
 
