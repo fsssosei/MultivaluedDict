@@ -18,6 +18,8 @@ pip install multivalued_dict
 
 ## Usage
 
+The statement to import the package:
+
 <pre><code>from multivalued_dict_package import multivalued_dict</code></pre>
 
 or
@@ -45,4 +47,12 @@ multivalued_dict({'a': ['test-1'], 'b': ['test-2'], 'c': ['test-3']})
 >>> mv_d
 
 multivalued_dict({'a': ['test-1', 'test-3'], 'b': ['test-2']})
+</code></pre>
+
+
+Statements for automated testing of modules:
+
+<pre><code>
+import multivalued_dict_package.doctestmod_module as mvd
+mvd.doctestmod()
 </code></pre>
