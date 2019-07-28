@@ -52,7 +52,5 @@ multivalued_dict({'a': ['test-1', 'test-3'], 'b': ['test-2']})
 
 Statements for automated testing of modules:
 
-<pre><code>
-import multivalued_dict_package.doctestmod_module as mvd
-mvd.doctestmod()
-</code></pre>
+<pre><code>import multivalued_dict_package.doctestmod_module as mvd
+mvd.doctestmod()</code></pre>
