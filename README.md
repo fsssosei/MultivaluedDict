@@ -27,8 +27,7 @@ or
 <pre><code>from multivalued_dict_package import *</code></pre>
 
 
-<pre><code>
->>> mv_d = multivalued_dict()
+<pre><code>>>> mv_d = multivalued_dict()
 
 >>> mv_d
 
