@@ -17,3 +17,4 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 '''
 
 from multivalued_dict_package.multivalued_dict_module import *
+from multivalued_dict_package.doctestmod_module import *
