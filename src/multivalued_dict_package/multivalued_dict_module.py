@@ -27,7 +27,7 @@ __all__ = ['multivalued_dict', 'START_POS', 'END_POS']
 START_POS = 'S'
 END_POS = 'E'
 
-class __eliminate_metaclass_conflicts(check_self_class_call_of_meta, ABCMeta):
+class __eliminate_metaclass_conflicts(check_self_class_call_of_meta, ABCMeta):  #lgtm [py/missing-call-to-init]
     pass
 
 class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):
