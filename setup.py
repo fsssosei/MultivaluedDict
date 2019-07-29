@@ -23,19 +23,19 @@ with open("README.md", encoding='utf-8') as fh:
 
 setup(
     name='multivalued_dict',
-    version='1.2.0',
+    version='1.4.1',
     description='Multivalued dictionary package in python.',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/fsssosei/MultivaluedDict',
-    license='GNU Affero General Public License v3 or later (AGPLv3+)',
+    license='GNU Affero General Public License v3',
     author='sosei',
     author_email='fss.sosei@gmail.com',
     keywords=['multivalued', 'dictionary'],
     python_requires='>=3.6',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
-        'License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)',
+        'License :: OSI Approved :: GNU Affero General Public License v3',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
