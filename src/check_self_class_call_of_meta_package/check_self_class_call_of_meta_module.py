@@ -1,5 +1,5 @@
 '''
-multivalued_dict - This is a multi-valued dictionary package.
+check_self_class_call_of_meta - This is the metaclass that adds the check self method when the class name is called.
 Copyright (C) 2019  sosei
 
 This program is free software: you can redistribute it and/or modify
