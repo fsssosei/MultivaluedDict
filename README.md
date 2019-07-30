@@ -31,7 +31,7 @@ or
 
 	from multivalued_dict_package import *
 	
-
+Example:
 
 	>>> mv_d = multivalued_dict()
 
