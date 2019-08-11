@@ -18,7 +18,7 @@
 
 Installation can be done through pip. You must have python version >= 3.6.
 
-pip install multivalued_dict
+	pip install multivalued_dict
 
 ## Usage
 
