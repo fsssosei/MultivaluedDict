@@ -6,6 +6,7 @@
 [![Build Status](https://scrutinizer-ci.com/g/fsssosei/MultivaluedDict/badges/build.png?b=master)](https://scrutinizer-ci.com/g/fsssosei/MultivaluedDict/build-status/master)
 [![Code Intelligence Status](https://scrutinizer-ci.com/g/fsssosei/MultivaluedDict/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
 ![PyPI](https://img.shields.io/pypi/v/multivalued-dict?color=red)
+![PyPI - Downloads](https://img.shields.io/pypi/dw/multivalued-dict?label=PyPI%20-%20Downloads)
 
 *本包特点是跟dict原生类型用例高度一致，包括发生异常的类型。在此基础上增添了一些专门的多值字典方法。*
 
