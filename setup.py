@@ -23,7 +23,7 @@ with open("README.md", encoding='utf-8') as fh:
 
 setup(
     name='multivalued_dict',
-    version='1.4.5',
+    version='1.4.6',
     description='Multivalued dictionary package in python.',
     long_description=long_description,
     long_description_content_type='text/markdown',
