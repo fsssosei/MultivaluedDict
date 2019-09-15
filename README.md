@@ -5,6 +5,8 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/fsssosei/MultivaluedDict/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/fsssosei/MultivaluedDict/?branch=master)
 [![Build Status](https://scrutinizer-ci.com/g/fsssosei/MultivaluedDict/badges/build.png?b=master)](https://scrutinizer-ci.com/g/fsssosei/MultivaluedDict/build-status/master)
 [![Code Intelligence Status](https://scrutinizer-ci.com/g/fsssosei/MultivaluedDict/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
+![GitHub Release Date](https://img.shields.io/github/release-date/fsssosei/MultivaluedDict)
+![PyPI - Status](https://img.shields.io/pypi/status/multivalued-dict)
 ![PyPI](https://img.shields.io/pypi/v/multivalued-dict?color=red)
 ![PyPI - Downloads](https://img.shields.io/pypi/dw/multivalued-dict?label=PyPI%20-%20Downloads)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/multivalued-dict)
