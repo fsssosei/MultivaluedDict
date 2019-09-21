@@ -62,5 +62,5 @@ Example:
 
 Statements for automated testing of modules:
 
-	import multivalued_dict_package.doctestmod_module as mvd
-	mvd.doctestmod()
+	import multivalued_dict_package.doctestmod_module as mvdt
+	mvdt.doctestmod()
