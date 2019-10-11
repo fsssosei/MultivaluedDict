@@ -22,7 +22,7 @@ from collections import defaultdict
 from collections import UserDict
 from collections.abc import Iterable
 
-__all__ = ['multivalued_dict', 'START_POS', 'END_POS']
+__all__: list = ['multivalued_dict', 'START_POS', 'END_POS']
 
 START_POS = 'S'
 END_POS = 'E'
@@ -30,7 +30,7 @@ END_POS = 'E'
 class __eliminate_metaclass_conflicts(check_self_class_call_of_meta, ABCMeta):
     pass
 
-class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  #lgtm [py/missing-call-to-init]
+class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):
     '''
         multivalued_dict() -> new empty dictionary
         multivalued_dict(mapping) -> new dictionary initialized from a mapping object's
@@ -50,6 +50,10 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
         >>> mv_d
         multivalued_dict({'a': ['test-1'], 'b': ['test-2'], 'c': ['test-3']})
         
+        >>> mv_d = multivalued_dict({'a': ['test-1', 'test-2', 'test-3'], 'b': 'test-4'})
+        >>> mv_d
+        multivalued_dict({'a': ['test-1', 'test-2', 'test-3'], 'b': ['test-4']})
+        
         >>> mv_d = multivalued_dict([['a', 'test-1'], ['b', 'test-2'], ['a', 'test-3']])
         >>> mv_d
         multivalued_dict({'a': ['test-1', 'test-3'], 'b': ['test-2']})
@@ -57,6 +61,10 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
         >>> mv_d = multivalued_dict(a = 'test-1', b = 'test-2', c = 'test-3')
         >>> mv_d
         multivalued_dict({'a': ['test-1'], 'b': ['test-2'], 'c': ['test-3']})
+        
+        >>> mv_d = multivalued_dict(a = ['test-1', 'test-2', 'test-3'])
+        >>> mv_d
+        multivalued_dict({'a': ['test-1', 'test-2', 'test-3']})
         
         >>> mv_d = multivalued_dict([['a', 'test-1'], ['c', 'test-3']], b = 'test-2')
         >>> mv_d
@@ -114,9 +122,9 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
             >>> mv_d
             multivalued_dict({'a': ['test-1'], 'b': ['test-2'], 'c': ['test-3'], 'd': ['test-4'], 'e': ['test-5']})
             
-            >>> mv_d.__init__({'a': 'test-6'})
+            >>> mv_d.__init__({'a': ['test-6', 'test-7']})
             >>> mv_d
-            multivalued_dict({'a': ['test-1', 'test-6'], 'b': ['test-2'], 'c': ['test-3'], 'd': ['test-4'], 'e': ['test-5']})
+            multivalued_dict({'a': ['test-1', 'test-6', 'test-7'], 'b': ['test-2'], 'c': ['test-3'], 'd': ['test-4'], 'e': ['test-5']})
             
             >>> multivalued_dict.__init__('x')
             Traceback (most recent call last):
@@ -130,9 +138,16 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
                 self.data = defaultdict(list)
             if len_of_args == 1:
                 initial_items = args[0]
-                self.update(initial_items)
+                if isinstance(initial_items, dict):
+                    for _key, _value in initial_items.items():
+                        if isinstance(_value, (tuple, list)):
+                            self.data[_key].extend(_value)
+                        else:
+                            self.data[_key].append(_value)
+                else:
+                    self.update(initial_items)
         if kwargs != dict():
-            self.update(kwargs)
+            self.__init__(kwargs)
     
     def __repr__(self):
         '''
