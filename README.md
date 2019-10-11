@@ -46,11 +46,11 @@ Example:
 	multivalued_dict({})
 
 
-	>>> mv_d = multivalued_dict({'a': 'test-1', 'b': 'test-2', 'c': 'test-3'})
+	>>> mv_d = multivalued_dict({'a': ['test-1', 'test-2', 'test-3'], 'b': 'test-4'})
 
 	>>> mv_d
 
-	multivalued_dict({'a': ['test-1'], 'b': ['test-2'], 'c': ['test-3']})
+	multivalued_dict({'a': ['test-1', 'test-2', 'test-3'], 'b': ['test-4']})
 
 
 	>>> mv_d = multivalued_dict([['a', 'test-1'], ['b', 'test-2'], ['a', 'test-3']])
