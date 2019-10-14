@@ -41,7 +41,7 @@ class check_self_class_call_of_meta(type):
     
     def __new__(cls, name, bases, namespace, **kwargs):
         for _key, _value in namespace.items():
-            if isfunction(value):
+            if isfunction(_value):
                 namespace.__setitem__(_key, cls.__class_function_wrapper(_value))
         return type.__new__(cls, name, bases, namespace)
     
