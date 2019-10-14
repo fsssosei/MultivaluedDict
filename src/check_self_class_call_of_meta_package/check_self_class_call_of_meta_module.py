@@ -31,7 +31,7 @@ class check_self_class_call_of_meta(type):
             class_of_first_arg = type(first_arg)
             func_of_module = func.__module__
             func_of_class = func.__qualname__.rpartition('.')[0]
-            exec('from '+func_of_module+' import '+func_of_class)
+            exec('from ' + func_of_module + ' import ' + func_of_class)
             original_class = eval(func_of_class)
             if issubclass(class_of_first_arg, original_class):
                 return func(*args, **kwargs)
@@ -40,9 +40,9 @@ class check_self_class_call_of_meta(type):
         return wrapper
     
     def __new__(cls, name, bases, namespace, **kwargs):
-        for key, value in namespace.items():
+        for _key, _value in namespace.items():
             if isfunction(value):
-                namespace.__setitem__(key, cls.__class_function_wrapper(value))
+                namespace.__setitem__(_key, cls.__class_function_wrapper(_value))
         return type.__new__(cls, name, bases, namespace)
     
     def __call__(self, *args, **kwargs):
