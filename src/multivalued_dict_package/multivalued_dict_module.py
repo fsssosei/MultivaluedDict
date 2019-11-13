@@ -82,7 +82,7 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
         TypeError: multivalued_dict expected at most 1 arguments, got 2
     '''
     
-    version = '1.6.1'
+    version = '1.6.2'
     
     __marker = object()
     
