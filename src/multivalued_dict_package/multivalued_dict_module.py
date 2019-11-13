@@ -18,9 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from check_self_class_call_of_meta_package import check_self_class_call_of_meta
 from abc import ABCMeta
-from collections import defaultdict
 from collections import UserDict
-from collections.abc import Iterable
 
 __all__: list = ['multivalued_dict', 'START_POS', 'END_POS']
 
@@ -30,7 +28,7 @@ END_POS = 'E'
 class __eliminate_metaclass_conflicts(check_self_class_call_of_meta, ABCMeta):
     pass
 
-class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  #lgtm [py/missing-call-to-init]
+class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):
     '''
         multivalued_dict() -> new empty dictionary
         multivalued_dict(mapping) -> new dictionary initialized from a mapping object's
@@ -82,7 +80,10 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
         TypeError: multivalued_dict expected at most 1 arguments, got 2
     '''
     
-    version = '1.6.2'
+    from collections import defaultdict
+    from collections.abc import Iterable
+    
+    version = '1.7.0'
     
     __marker = object()
     
