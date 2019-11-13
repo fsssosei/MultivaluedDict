@@ -83,7 +83,7 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
     from collections import defaultdict
     from collections.abc import Iterable
     
-    version = '1.7.0'
+    version = '1.7.1'
     
     __marker = object()
     
@@ -94,7 +94,8 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
             >>> multivalued_dict.__is_multivalued_dict__(mv_d)
             True
         '''
-        return (isinstance(x, cls) or ((True if x.default_factory == type([]) else False) if isinstance(x, defaultdict) else False))
+        
+        return (isinstance(x, cls) or ((True if x.default_factory == type([]) else False) if isinstance(x, cls.defaultdict) else False))
     
     @classmethod
     def fromkeys(cls, iterable, value = None):
@@ -106,6 +107,7 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
             >>> multivalued_dict.fromkeys(['a', 'b', 'c'], 'test')
             multivalued_dict({'a': ['test'], 'b': ['test'], 'c': ['test']})
         '''
+        
         dict_var = dict.fromkeys(iterable, value)
         return cls(dict_var)
     
@@ -133,12 +135,13 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
             Traceback (most recent call last):
             TypeError: descriptor '__init__' requires a 'multivalued_dict' object but received a 'str'
         '''
+        
         len_of_args = len(args)
         if len_of_args > 1:
             raise TypeError(f'multivalued_dict expected at most 1 arguments, got {len_of_args}')
         else:
             if not hasattr(self, 'data'):
-                self.data = defaultdict(list)
+                self.data = self.defaultdict(list)
             if len_of_args == 1:
                 initial_items = args[0]
                 if isinstance(initial_items, dict):
@@ -156,6 +159,7 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
         '''
             Return repr(self).
         '''
+        
         return f'multivalued_dict({dict(self.data)})'
     
     def __iter__(self):
@@ -169,6 +173,7 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
             >>> multivalued_dict(mv_d.__iter__())
             multivalued_dict({'a': [['test-1']], 'b': [['test-2']], 'c': [['test-3']]})
         '''
+        
         return iter(self.data.items())
     
     def __len__(self):
@@ -179,6 +184,7 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
             >>> mv_d.__len__()
             2
         '''
+        
         return self.data.__len__()
     
     def __lenvalue__(self, key = __marker):
@@ -189,6 +195,7 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
             >>> mv_d.__lenvalue__('a')
             3
         '''
+        
         if key is self.__marker:
             return sum(map(len, self.data.values()))
         else:
@@ -206,6 +213,7 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
             Traceback (most recent call last):
             KeyError: 'd'
         '''
+        
         if key in self.data:
             return self.data[key]
         else:
@@ -221,6 +229,7 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
             >>> mv_d.__matchkv__('d', 1)
             False
         '''
+        
         return value in self.data[key]
     
     def __eq__(self, other):
@@ -235,6 +244,7 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
             >>> mv_d == {'a': ['test-1'], 'b': ['test-2'], 'c': ['test-0']}
             False
         '''
+        
         return self.data.__eq__(other)
     
     def __contains__(self, key):
@@ -249,6 +259,7 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
             >>> 'd' in mv_d
             False
         '''
+        
         return self.data.__contains__(key)
     
     def __delkv__(self, key, value, allkv = True, direction = START_POS):
@@ -269,6 +280,7 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
             >>> mv_d
             multivalued_dict({'a': ['x', 'y']})
         '''
+        
         assert allkv in (True, False), '"allkv" can only be True or False'
         assert direction in (START_POS, END_POS), '"direction" can only be START_POS or END_POS'
         
@@ -294,6 +306,7 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
             >>> mv_d
             multivalued_dict({'a': ['test-1'], 'c': ['test-3']})
         '''
+        
         self.data.__delitem__(key)
     
     def __setitem__(self, key, item):
@@ -312,6 +325,7 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
             >>> mv_d
             multivalued_dict({'a': ['test-0'], 'b': ['test-4'], 'c': ['test-5']})
         '''
+        
         self.data.__setitem__(key, [item])
     
     def get(self, key, default = None):
@@ -324,6 +338,7 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
             >>> mv_d.get('d')
             [None]
         '''
+        
         return self.data.get(key, [default])
     
     def count(self, key, value):
@@ -332,6 +347,7 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
             >>> mv_d.count('a', 'y')
             2
         '''
+        
         return self.data[key].count(value)
     
     def update(self, *args, **kwargs):
@@ -380,12 +396,13 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
             Traceback (most recent call last):
             TypeError: descriptor 'update' requires a 'multivalued_dict' object but received a 'str'
         '''
+        
         len_of_args = len(args)
         if len_of_args > 1:
             raise TypeError(f'multivalued_dict expected at most 1 arguments, got {len_of_args}')
         if len_of_args == 1:
             update_items = args[0]
-            if not isinstance(update_items, Iterable):
+            if not isinstance(update_items, self.Iterable):
                 raise TypeError(f"'{update_items.__class__.__name__}' object is not iterable")
             if multivalued_dict.__is_multivalued_dict__(update_items):
                 for _key, _value in update_items.items():
@@ -396,7 +413,7 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
             else:
                 i = 0
                 for item in update_items:
-                    if not isinstance(item, Iterable):
+                    if not isinstance(item, self.Iterable):
                         raise TypeError(f'cannot convert dictionary update sequence element #{i} to a sequence')
                     if len(item) != 2:
                         raise ValueError(f'dictionary update sequence element #{i} has length {len(item)}; 2 is required')
@@ -420,6 +437,7 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
             >>> mv_d
             multivalued_dict({'a': ['test-1'], 'c': ['test-3'], 'b': [None], 'd': ['test=4']})
         '''
+        
         return self.data.setdefault(key, [default])
     
     def pop(self, key, default=__marker):
@@ -439,6 +457,7 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
             >>> mv_d
             multivalued_dict({'a': ['test-1'], 'c': ['test-3']})
         '''
+        
         if default is self.__marker:
             return self.data.pop(key)
         else:
@@ -454,6 +473,7 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
             >>> mv_d.popitem()
             ('c', ['test-3'])
         '''
+        
         return self.data.popitem()
     
     def copy(self):
@@ -472,6 +492,7 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
             >>> mv_d_b
             multivalued_dict({'a': [1, 2, 3]})
         '''
+        
         return multivalued_dict(self.data)
     
     def items(self):
@@ -486,6 +507,7 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
             key = b, value = ['test-2']
             key = c, value = ['test-3']
         '''
+        
         return self.data.items()
     
     def keys(self):
@@ -500,6 +522,7 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
             key = b
             key = c
         '''
+        
         return self.data.keys()
     
     def values(self):
@@ -514,6 +537,7 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
             value = ['test-2']
             value = ['test-3']
         '''
+        
         return self.data.values()
     
     def clear(self):
@@ -527,6 +551,7 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
             >>> mv_d
             multivalued_dict({})
         '''
+        
         self.data.clear()
 
     def reverse(self, key):
@@ -538,4 +563,5 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
             >>> mv_d
             multivalued_dict({'a': [3, 2, 1]})
         '''
+        
         self.data[key].reverse()
