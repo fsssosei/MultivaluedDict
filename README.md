@@ -30,11 +30,6 @@ Installation can be done through pip. You must have python version >= 3.6.
 
 The statement to import the package:
 
-	from multivalued_dict_package import multivalued_dict
-
-
-or
-
 	from multivalued_dict_package import *
 	
 Example:
