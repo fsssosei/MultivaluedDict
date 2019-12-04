@@ -22,7 +22,7 @@
 
 ## Installation
 
-Installation can be done through pip. You must have python version >= 3.7.
+Installation can be done through pip. You must have python version >= 3.7
 
 	pip install multivalued_dict
 
