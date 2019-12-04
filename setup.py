@@ -23,7 +23,7 @@ with open("README.md", encoding='utf-8') as fh:
 
 setup(
     name='multivalued_dict',
-    version='1.7.1',
+    version='1.7.2',
     description='Multivalued dictionary package in python.',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -32,11 +32,11 @@ setup(
     author='sosei',
     author_email='fss.sosei@gmail.com',
     keywords=['multivalued', 'dictionary'],
-    python_requires='>=3.6',
+    python_requires='>=3.7',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'License :: OSI Approved :: GNU Affero General Public License v3',
-        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
     ],
     package_dir={'': 'src'},
     packages=find_packages('src'),
