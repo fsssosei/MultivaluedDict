@@ -20,7 +20,7 @@ from check_self_class_call_of_meta_package import check_self_class_call_of_meta
 from abc import ABCMeta
 from collections import UserDict
 
-__all__: list = ['multivalued_dict', 'START_POS', 'END_POS']
+__all__ = ['multivalued_dict', 'START_POS', 'END_POS']
 
 START_POS = 'S'
 END_POS = 'E'
@@ -83,7 +83,7 @@ class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  
     from collections import defaultdict
     from collections.abc import Iterable
     
-    version = '1.7.1'
+    version = '1.7.2'
     
     __marker = object()
     
