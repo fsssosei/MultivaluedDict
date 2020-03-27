@@ -12,13 +12,9 @@
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/multivalued-dict)
 ![PyPI - License](https://img.shields.io/pypi/l/multivalued-dict)
 
-*本包特点是跟dict原生类型用例高度一致，包括发生异常的类型。在此基础上增添了一些专门的多值字典方法。*
-
-*欢迎补全文档。*
-
 *Multivalued dictionary package in python.* 
 
-*Welcome to complete the documentation.*
+*This package features a high degree of consistency with the dict native type use case, including the type of exception that occurs.On this basis, some special multi-value dictionary methods are added.*
 
 ## Installation
 
