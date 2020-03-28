@@ -1,6 +1,6 @@
 '''
 multivalued_dict - This is a multi-valued dictionary package.
-Copyright (C) 2019  sosei
+Copyright (C) 2019-2020  sosei
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published
@@ -23,7 +23,7 @@ with open("README.md", encoding='utf-8') as fh:
 
 setup(
     name='multivalued_dict',
-    version='1.7.4',
+    version='1.7.5',
     description='Multivalued dictionary package in python.',
     long_description=long_description,
     long_description_content_type='text/markdown',
