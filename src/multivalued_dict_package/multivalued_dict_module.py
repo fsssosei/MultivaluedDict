@@ -25,10 +25,10 @@ __all__ = ['multivalued_dict', 'START_POS', 'END_POS']
 START_POS = 'S'
 END_POS = 'E'
 
-class __eliminate_metaclass_conflicts(check_self_class_call_of_meta, ABCMeta):
+class _eliminate_metaclass_conflicts(check_self_class_call_of_meta, ABCMeta):
     pass
 
-class multivalued_dict(UserDict, metaclass = __eliminate_metaclass_conflicts):  #lgtm [py/missing-call-to-init]
+class multivalued_dict(UserDict, metaclass = _eliminate_metaclass_conflicts):  #lgtm [py/missing-call-to-init]
     '''
         multivalued_dict() -> new empty dictionary
         multivalued_dict(mapping) -> new dictionary initialized from a mapping object's
