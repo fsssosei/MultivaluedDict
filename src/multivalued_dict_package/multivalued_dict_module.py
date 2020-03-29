@@ -1,6 +1,6 @@
 '''
 multivalued_dict - This is a multi-valued dictionary package.
-Copyright (C) 2019  sosei
+Copyright (C) 2019-2020  sosei
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published
@@ -83,7 +83,7 @@ class multivalued_dict(UserDict, metaclass = _eliminate_metaclass_conflicts):  #
     from collections import defaultdict
     from collections.abc import Iterable
     
-    version = '1.7.3'
+    version = '1.7.6'
     
     __marker = object()
     
