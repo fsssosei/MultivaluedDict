@@ -28,7 +28,7 @@ END_POS = 'E'
 class _eliminate_metaclass_conflicts(check_self_class_call_of_meta, ABCMeta):
     pass
 
-class multivalued_dict(UserDict, metaclass = _eliminate_metaclass_conflicts):  #lgtm [py/missing-call-to-init]
+class multivalued_dict(UserDict, metaclass = _eliminate_metaclass_conflicts):
     '''
         multivalued_dict() -> new empty dictionary
         multivalued_dict(mapping) -> new dictionary initialized from a mapping object's
@@ -83,7 +83,7 @@ class multivalued_dict(UserDict, metaclass = _eliminate_metaclass_conflicts):  #
     from collections import defaultdict
     from collections.abc import Iterable
     
-    version = '1.7.6'
+    version = '2.0.0'
     
     __marker = object()
     
@@ -187,20 +187,6 @@ class multivalued_dict(UserDict, metaclass = _eliminate_metaclass_conflicts):  #
         
         return self.data.__len__()
     
-    def __lenvalue__(self, key = __marker):
-        '''
-            >>> mv_d = multivalued_dict([['a', 1], ['a', 2], ['a', 3], ['b', 1], ['b', 2], ['c', 1]])
-            >>> mv_d.__lenvalue__()
-            6
-            >>> mv_d.__lenvalue__('a')
-            3
-        '''
-        
-        if key is self.__marker:
-            return sum(map(len, self.data.values()))
-        else:
-            return len(self.data[key])
-    
     def __getitem__(self, key):
         '''
             x.__getitem__(y) <==> x[y]
@@ -218,19 +204,6 @@ class multivalued_dict(UserDict, metaclass = _eliminate_metaclass_conflicts):  #
             return self.data[key]
         else:
             raise KeyError(key)
-    
-    def __matchkv__(self, key, value):
-        '''
-            >>> mv_d = multivalued_dict([['a', 1], ['a', 2], ['a', 3], ['b', 1], ['b', 2], ['c', 1]])
-            >>> mv_d.__matchkv__('b', 3)
-            False
-            >>> mv_d.__matchkv__('a', 2)
-            True
-            >>> mv_d.__matchkv__('d', 1)
-            False
-        '''
-        
-        return value in self.data[key]
     
     def __eq__(self, other):
         '''
@@ -261,6 +234,64 @@ class multivalued_dict(UserDict, metaclass = _eliminate_metaclass_conflicts):  #
         '''
         
         return self.data.__contains__(key)
+    
+    def __delitem__(self, key):
+        '''
+            Delete self[key].
+            
+            >>> mv_d = multivalued_dict({'a': 'test-1', 'b': 'test-2', 'c': 'test-3'})
+            >>> mv_d.__delitem__('b')
+            >>> mv_d
+            multivalued_dict({'a': ['test-1'], 'c': ['test-3']})
+        '''
+        
+        self.data.__delitem__(key)
+    
+    def __setitem__(self, key, item):
+        '''
+            Set self[key] to value.
+            
+            >>> mv_d = multivalued_dict([['a', 'test-1'], ['a', 'test-2'], ['a', 'test-3'], ['b', 'test-4']])
+            >>> mv_d
+            multivalued_dict({'a': ['test-1', 'test-2', 'test-3'], 'b': ['test-4']})
+            
+            >>> mv_d.__setitem__('c', 'test-5')
+            >>> mv_d
+            multivalued_dict({'a': ['test-1', 'test-2', 'test-3'], 'b': ['test-4'], 'c': ['test-5']})
+            
+            >>> mv_d.__setitem__('a', 'test-0')
+            >>> mv_d
+            multivalued_dict({'a': ['test-0'], 'b': ['test-4'], 'c': ['test-5']})
+        '''
+        
+        self.data.__setitem__(key, [item])
+    
+    def __lenvalue__(self, key = __marker):
+        '''
+            >>> mv_d = multivalued_dict([['a', 1], ['a', 2], ['a', 3], ['b', 1], ['b', 2], ['c', 1]])
+            >>> mv_d.__lenvalue__()
+            6
+            >>> mv_d.__lenvalue__('a')
+            3
+        '''
+        
+        if key is self.__marker:
+            return sum(map(len, self.data.values()))
+        else:
+            return len(self.data[key])
+    
+    def __matchkv__(self, key, value):
+        '''
+            >>> mv_d = multivalued_dict([['a', 1], ['a', 2], ['a', 3], ['b', 1], ['b', 2], ['c', 1]])
+            >>> mv_d.__matchkv__('b', 3)
+            False
+            >>> mv_d.__matchkv__('a', 2)
+            True
+            >>> mv_d.__matchkv__('d', 1)
+            False
+        '''
+        
+        return value in self.data[key]
     
     def __delkv__(self, key, value, allkv = True, direction = START_POS):
         '''
@@ -297,40 +328,22 @@ class multivalued_dict(UserDict, metaclass = _eliminate_metaclass_conflicts):  #
                         self.data[key].__delitem__(-1 - i)
                         break
     
-    def __delitem__(self, key):
+    def __reverse__(self):
         '''
-            Delete self[key].
-            
-            >>> mv_d = multivalued_dict({'a': 'test-1', 'b': 'test-2', 'c': 'test-3'})
-            >>> mv_d.__delitem__('b')
+            >>> mv_d = multivalued_dict([['a', 1], ['b', 2], ['c', 3]])
             >>> mv_d
-            multivalued_dict({'a': ['test-1'], 'c': ['test-3']})
-        '''
-        
-        self.data.__delitem__(key)
-    
-    def __setitem__(self, key, item):
-        '''
-            Set self[key] to value.
-            
-            >>> mv_d = multivalued_dict([['a', 'test-1'], ['a', 'test-2'], ['a', 'test-3'], ['b', 'test-4']])
+            multivalued_dict({'a': [1], 'b': [2], 'c': [3]})
+            >>> mv_d.__reverse__()
             >>> mv_d
-            multivalued_dict({'a': ['test-1', 'test-2', 'test-3'], 'b': ['test-4']})
-            
-            >>> mv_d.__setitem__('c', 'test-5')
-            >>> mv_d
-            multivalued_dict({'a': ['test-1', 'test-2', 'test-3'], 'b': ['test-4'], 'c': ['test-5']})
-            
-            >>> mv_d.__setitem__('a', 'test-0')
-            >>> mv_d
-            multivalued_dict({'a': ['test-0'], 'b': ['test-4'], 'c': ['test-5']})
+            multivalued_dict({'c': [3], 'b': [2], 'a': [1]})
         '''
         
-        self.data.__setitem__(key, [item])
+        for _key in reversed(tuple(self.data.keys())):
+            self.data[_key] = self.data.pop(_key)
     
     def get(self, key, default = None):
         '''
-            Return the value for key if key is in the dictionary, else default.
+            D.get(k[,d]) -> D[k] if k in D, else d.  d defaults to None.
             
             >>> mv_d = multivalued_dict({'a': 'test-1', 'b': 'test-2', 'c': 'test-3'})
             >>> mv_d.get('a')
@@ -425,6 +438,8 @@ class multivalued_dict(UserDict, metaclass = _eliminate_metaclass_conflicts):  #
     
     def setdefault(self, key, default = None):
         '''
+            D.setdefault(k[,d]) -> D.get(k,d), also set D[k]=d if k not in D
+            
             >>> mv_d = multivalued_dict({'a': 'test-1', 'c': 'test-3'})
             >>> mv_d.setdefault('a')
             ['test-1']
@@ -442,6 +457,9 @@ class multivalued_dict(UserDict, metaclass = _eliminate_metaclass_conflicts):  #
     
     def pop(self, key, default=__marker):
         '''
+            D.pop(k[,d]) -> v, remove specified key and return the corresponding value.
+            If key is not found, d is returned if given, otherwise KeyError is raised.
+            
             >>> mv_d = multivalued_dict({'a': 'test-1', 'b': 'test-2', 'c': 'test-3'})
             >>> mv_d.pop('b')
             ['test-2']
@@ -553,15 +571,3 @@ class multivalued_dict(UserDict, metaclass = _eliminate_metaclass_conflicts):  #
         '''
         
         self.data.clear()
-
-    def reverse(self, key):
-        '''
-            >>> mv_d = multivalued_dict([['a', 1], ['a', 2], ['a', 3]])
-            >>> mv_d
-            multivalued_dict({'a': [1, 2, 3]})
-            >>> mv_d.reverse('a')
-            >>> mv_d
-            multivalued_dict({'a': [3, 2, 1]})
-        '''
-        
-        self.data[key].reverse()
