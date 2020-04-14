@@ -83,7 +83,7 @@ class multivalued_dict(UserDict, metaclass = _eliminate_metaclass_conflicts):
     from collections import defaultdict
     from collections.abc import Iterable
     
-    version = '2.0.0'
+    version = '2.0.1'
     
     __marker = object()
     
