@@ -14,7 +14,7 @@
 
 *Multivalued dictionary package in python.* 
 
-*This package features a high degree of consistency with the dict native type use case, including the type of exception that occurs.On this basis, some special multi-value dictionary methods are added.*
+*This package features a high degree of consistency with the dict native type use case, including the type of exception that occurs. On this basis, some special multi-value dictionary methods are added.*
 
 ## Installation
 
