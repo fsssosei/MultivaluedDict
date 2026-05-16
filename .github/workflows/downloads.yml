@@ -1,0 +1,18 @@
+name: Update Downloads
+on:
+  schedule:
+    - cron: '0 1 * * *'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install pypinfo
+      - run: pypinfo --json --non-ci MultivaluedDict > downloads.json
+      - run: git config user.name "fsssosei" && git config user.email "fss.sosei@gmail.com"
+      - run: git add downloads.json && git commit -m "update downloads" && git push
