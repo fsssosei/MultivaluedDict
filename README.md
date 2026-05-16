@@ -9,7 +9,7 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/a486aacc36da4dea8016136bd0f52d5f)](https://www.codacy.com/app/fsssosei/MultivaluedDict?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=fsssosei/MultivaluedDict&amp;utm_campaign=Badge_Grade)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/fsssosei/MultivaluedDict/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/fsssosei/MultivaluedDict/?branch=master)
 ![PyPI - Downloads](https://img.shields.io/pypi/dw/multivalued-dict?label=PyPI%20-%20Downloads)
-[![PyPI Downloads](https://pypi-badges.intfar.com/badge/multivalued-dict)](https://pypi-badges.intfar.com)
+[![Total Downloads](https://pypi-badges.intfar.com/badge/multivalued-dict)](https://pypi-badges.intfar.com)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/multivalued-dict)
 ![PyPI - License](https://img.shields.io/pypi/l/multivalued-dict)
 
